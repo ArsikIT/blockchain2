@@ -1,0 +1,55 @@
+name: Smart Contracts CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-analyze:
+    name: Foundry Tests and Slither
+    runs-on: ubuntu-latest
+    env:
+      MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Show Foundry version
+        run: forge --version
+
+      - name: Verify mainnet RPC secret exists
+        run: |
+          if [ -z "${MAINNET_RPC_URL}" ]; then
+            echo "MAINNET_RPC_URL secret is missing."
+            echo "Add it in GitHub Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+      - name: Build contracts
+        run: forge build
+
+      - name: Run all tests
+        run: forge test -vvv
+
+      - name: Generate Task 3 gas report
+        run: forge test --match-path test/task3/AMM.t.sol --gas-report
+
+      - name: Generate Task 5 gas report
+        run: forge test --match-path test/task5/LendingPool.t.sol --gas-report
+
+      - name: Run Slither analysis
+        uses: crytic/slither-action@v0.4.1
+        with:
+          fail-on: none
+          ignore-compile: false

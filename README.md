@@ -31,6 +31,8 @@ This repository is organized by assignment task so each contract, test, script, 
   - `README.md`
 - `docs/task5/`
   - `README.md`
+- `docs/task6/`
+  - `README.md`
 
 ## Task Commands
 
@@ -63,6 +65,11 @@ Requires `.env` with `MAINNET_RPC_URL`.
 .\.foundry\bin\forge.exe test --match-path test/task5/LendingPool.t.sol -vvv
 .\.foundry\bin\forge.exe test --match-path test/task5/LendingPool.t.sol --gas-report
 ```
+
+### Task 6
+
+- Workflow file: `.github/workflows/test.yml`
+- Required GitHub secret: `MAINNET_RPC_URL`
 
 ## Notes
 
