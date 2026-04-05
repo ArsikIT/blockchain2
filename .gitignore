@@ -2,3 +2,6 @@
 cache/
 out/
 broadcast/
+
+.foundry/                                                                                                                                                    
+  lib/*.zip  
