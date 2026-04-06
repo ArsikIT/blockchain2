@@ -58,6 +58,7 @@ flowchart TD
     L --> M[Liquidator repays part of debt]
     M --> N[Liquidator receives collateral plus bonus]
 ```
+![alt text](task5.png)
 
 ## What Was Tested
 
